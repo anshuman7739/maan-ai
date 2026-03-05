@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://anshuman7739.github.io/maan-ai/sitemap.xml
