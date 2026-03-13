@@ -79,47 +79,65 @@ const style = document.createElement('style');
 style.textContent = `@keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }`;
 document.head.appendChild(style);
 
-// ---- CONTACT FORM ----
+// ---- EMAILJS INIT ----
+// IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
+(function () {
+    emailjs.init('KGb7dhEaUZ6fST79R');
+})();
+
+// ---- CONTACT FORM (EmailJS) ----
 const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('form-status');
 
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const btn = document.getElementById('submit-btn');
     const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
-    const business = document.getElementById('business').value;
     const service = document.getElementById('service').value;
     const message = document.getElementById('message').value;
-
-    // Build WhatsApp message
-    const waMessage = encodeURIComponent(
-        `Hi Anshu! 👋\n\n` +
-        `I'm interested in your services.\n\n` +
-        `*Name:* ${name}\n` +
-        `*Phone:* ${phone}\n` +
-        `*Business:* ${business || 'N/A'}\n` +
-        `*Service Needed:* ${service || 'Not specified'}\n` +
-        `*Details:* ${message || 'N/A'}\n\n` +
-        `Please get back to me soon!`
-    );
 
     // Animate button
     btn.innerHTML = '<span>Sending...</span>';
     btn.disabled = true;
+    formStatus.style.display = 'none';
 
-    setTimeout(() => {
-        window.open(`https://wa.me/916207679203?text=${waMessage}`, '_blank');
-        btn.innerHTML = '<span>✅ Message Sent via WhatsApp!</span>';
-        btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        contactForm.reset();
+    // EmailJS template parameters — these must match your EmailJS template variable names
+    const templateParams = {
+        from_name: name,
+        from_email: email,
+        phone: phone,
+        service: service || 'Not specified',
+        message: message,
+    };
 
-        setTimeout(() => {
-            btn.innerHTML = '<span>Start My Website Project</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    // IMPORTANT: Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS IDs
+    emailjs.send('service_2y02zn3', 'template_o0juu1x', templateParams)
+        .then(() => {
+            btn.innerHTML = '<span>✅ Message Sent!</span>';
+            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+            contactForm.reset();
+            formStatus.textContent = 'Thank you for contacting us. We will get back to you soon.';
+            formStatus.className = 'form-status success';
+            formStatus.style.display = 'block';
+
+            setTimeout(() => {
+                btn.innerHTML = '<span>Send Message</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 5000);
+        })
+        .catch((error) => {
+            console.error('EmailJS Error:', error);
+            btn.innerHTML = '<span>Send Message</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
             btn.style.background = '';
             btn.disabled = false;
-        }, 4000);
-    }, 800);
+            formStatus.textContent = 'Oops! Something went wrong. Please try again or contact us on WhatsApp.';
+            formStatus.className = 'form-status error';
+            formStatus.style.display = 'block';
+        });
 });
 
 // ---- AI CHATBOT WIDGET ----

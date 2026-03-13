@@ -2,9 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta name="description" content="Maan AI Solutions builds modern AI-powered websites for restaurants, cafes, and small businesses. Get a professional website that helps your business grow.">
+    <meta name="description"
+        content="Maan AI Solutions builds modern AI-powered websites for restaurants, cafes, and small businesses. Get a professional website that helps your business grow.">
     <meta name="google-site-verification" content="0Pn9Ox6YGZLl4E9Dpo6hennZDjyouxzCc7IG_Awhi0w" />
-    <meta name="description" content="We build modern websites for cafes and small businesses that attract more customers online. Fast, affordable, and professional.">
+    <meta name="description"
+        content="We build modern websites for cafes and small businesses that attract more customers online. Fast, affordable, and professional.">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Website Development for Cafes & Small Businesses | Maan AI Solutions</title>
@@ -69,17 +71,18 @@
                 <h1>Affordable Website Development for Cafes and Small Businesses</h1>
                 <h1>Maan AI Solutions</h1>
 
-<h2>AI-Powered Website Development</h2>
+                <h2>AI-Powered Website Development</h2>
 
-<h2>Websites for Restaurants and Cafes</h2>
+                <h2>Websites for Restaurants and Cafes</h2>
 
-<h2>Automation Tools for Businesses</h2>
+                <h2>Automation Tools for Businesses</h2>
                 <h2>Website Development for Restaurants and Small Businesses</h2>
 
-<p>
-We create modern websites for restaurants, cafes, startups, and local businesses.
-Our websites include mobile-friendly design, AI chatbots, and automation tools to help businesses grow online.
-</p>
+                <p>
+                    We create modern websites for restaurants, cafes, startups, and local businesses.
+                    Our websites include mobile-friendly design, AI chatbots, and automation tools to help businesses
+                    grow online.
+                </p>
                 <p class="hero-sub">
                     Modern websites, AI tools, and automation systems designed to help businesses grow faster.
                 </p>
@@ -678,46 +681,49 @@ Our websites include mobile-friendly design, AI chatbots, and automation tools t
                 </div>
                 <div class="contact-right" data-animate="fade-left">
                     <form class="contact-form" id="contactForm">
-                        <h3>Start My Website Project</h3>
+                        <h3>Get in Touch</h3>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="name">Your Name</label>
+                                <label for="name">Your Name *</label>
                                 <input type="text" id="name" name="name" placeholder="Rahul Sharma" required />
                             </div>
                             <div class="form-group">
-                                <label for="phone">Phone Number</label>
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" placeholder="you@example.com" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
                                 <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service Needed</label>
+                                <select id="service" name="service">
+                                    <option value="">Select a service...</option>
+                                    <option value="Business Website">Business Website</option>
+                                    <option value="AI Chatbot">AI Chatbot</option>
+                                    <option value="Business Automation">Business Automation</option>
+                                    <option value="Restaurant / Cafe Website">Restaurant / Cafe Website</option>
+                                    <option value="Landing Page">Landing Page</option>
+                                    <option value="Full AI-Powered System">Full AI-Powered System</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="business">Business Name</label>
-                            <input type="text" id="business" name="business" placeholder="My Restaurant / My Startup" />
-                        </div>
-                        <div class="form-group">
-                            <label for="service">Service Needed</label>
-                            <select id="service" name="service">
-                                <option value="">Select a service...</option>
-                                <option value="website">Business Website</option>
-                                <option value="chatbot">AI Chatbot</option>
-                                <option value="automation">Business Automation</option>
-                                <option value="restaurant">Restaurant / Cafe Website</option>
-                                <option value="landing">Landing Page</option>
-                                <option value="full">Full AI-Powered System</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Tell Me About Your Business</label>
+                            <label for="message">Your Message *</label>
                             <textarea id="message" name="message"
-                                placeholder="Briefly describe your business and what you want to achieve online..."
-                                rows="4"></textarea>
+                                placeholder="Tell us about your project or ask any question..." rows="4"
+                                required></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary btn-full" id="submit-btn">
-                            <span>Start My Website Project</span>
+                            <span>Send Message</span>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
                                 <path d="M5 12h14M12 5l7 7-7 7" />
                             </svg>
                         </button>
+                        <div id="form-status" class="form-status" style="display:none;"></div>
                     </form>
                 </div>
             </div>
@@ -809,6 +815,8 @@ Our websites include mobile-friendly design, AI chatbots, and automation tools t
         </div>
     </div>
 
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
 </body>
 
