@@ -79,66 +79,76 @@ const style = document.createElement('style');
 style.textContent = `@keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }`;
 document.head.appendChild(style);
 
-// ---- EMAILJS INIT ----
-// IMPORTANT: Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS public key
-(function () {
-    emailjs.init('KGb7dhEaUZ6fST79R');
-})();
-
 // ---- CONTACT FORM (EmailJS) ----
 const contactForm = document.getElementById('contactForm');
-const formStatus = document.getElementById('form-status');
 
-contactForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+// Initialize EmailJS with Public Key
+if (typeof emailjs !== 'undefined') {
+    emailjs.init("KGb7dhEaUZ6fST79R");
+}
 
-    const btn = document.getElementById('submit-btn');
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const service = document.getElementById('service').value;
-    const message = document.getElementById('message').value;
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    // Animate button
-    btn.innerHTML = '<span>Sending...</span>';
-    btn.disabled = true;
-    formStatus.style.display = 'none';
+        const btn = document.getElementById('submit-btn');
+        const nameInput = document.getElementById('name');
+        const phoneInput = document.getElementById('phone');
+        const businessInput = document.getElementById('business');
+        const serviceInput = document.getElementById('service');
+        const messageInput = document.getElementById('message');
 
-    // EmailJS template parameters — these must match your EmailJS template variable names
-    const templateParams = {
-        from_name: name,
-        from_email: email,
-        phone: phone,
-        service: service || 'Not specified',
-        message: message,
-    };
+        // Animate button to show sending state
+        const originalBtnHTML = btn.innerHTML;
+        btn.innerHTML = '<span>Sending...</span>';
+        btn.disabled = true;
 
-    // IMPORTANT: Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your actual EmailJS IDs
-    emailjs.send('service_2y02zn3', 'template_o0juu1x', templateParams)
-        .then(() => {
-            btn.innerHTML = '<span>✅ Message Sent!</span>';
-            btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-            contactForm.reset();
-            formStatus.textContent = 'Thank you for contacting us. We will get back to you soon.';
-            formStatus.className = 'form-status success';
-            formStatus.style.display = 'block';
+        // EmailJS template parameters
+        const templateParams = {
+            to_email: 'websitebymaan@gmail.com', // Safety: in case template uses {{to_email}}
+            email: 'websitebymaan@gmail.com',    // Safety: in case template uses {{email}}
+            from_name: nameInput.value,
+            name: nameInput.value,
+            phone: phoneInput.value,
+            business: businessInput.value || 'N/A',
+            service: serviceInput.value || 'Not specified',
+            message: messageInput.value || 'N/A',
+        };
 
-            setTimeout(() => {
-                btn.innerHTML = '<span>Send Message</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-                btn.style.background = '';
-                btn.disabled = false;
-            }, 5000);
-        })
-        .catch((error) => {
-            console.error('EmailJS Error:', error);
-            btn.innerHTML = '<span>Send Message</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-            btn.style.background = '';
-            btn.disabled = false;
-            formStatus.textContent = 'Oops! Something went wrong. Please try again or contact us on WhatsApp.';
-            formStatus.className = 'form-status error';
-            formStatus.style.display = 'block';
-        });
-});
+        console.log('Sending email with params:', templateParams);
+
+        // Send email via EmailJS
+        // Service ID: service_6cyw66m, Template ID: template_d6syuef, Public Key: KGb7dhEaUZ6fST79R
+        emailjs.send('service_6cyw66m', 'template_d6syuef', templateParams, 'KGb7dhEaUZ6fST79R')
+            .then(function (response) {
+                console.log('EmailJS Success:', response.status, response.text);
+                btn.innerHTML = '<span>✅ Message Sent Successfully!</span>';
+                btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                contactForm.reset();
+
+                setTimeout(() => {
+                    btn.innerHTML = originalBtnHTML;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 4000);
+            })
+            .catch(function (error) {
+                console.error('EmailJS Detailed Error:', error);
+                // Alert user of the specific error if possible
+                const errorMsg = error.text || error.message || 'Check EmailJS console';
+                console.error('Error content:', errorMsg);
+
+                btn.innerHTML = '<span>❌ Error: ' + (error.status || 'Failed') + '</span>';
+                btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+
+                setTimeout(() => {
+                    btn.innerHTML = originalBtnHTML;
+                    btn.style.background = '';
+                    btn.disabled = false;
+                }, 3000);
+            });
+    });
+}
 
 // ---- AI CHATBOT WIDGET ----
 const chatbotToggle = document.getElementById('chatbotToggle');
