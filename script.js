@@ -93,8 +93,8 @@ if (contactForm) {
 
         const btn = document.getElementById('submit-btn');
         const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
         const phoneInput = document.getElementById('phone');
-        const businessInput = document.getElementById('business');
         const serviceInput = document.getElementById('service');
         const messageInput = document.getElementById('message');
 
@@ -107,12 +107,11 @@ if (contactForm) {
         const templateParams = {
             to_email: 'websitebymaan@gmail.com', // Safety: in case template uses {{to_email}}
             email: 'websitebymaan@gmail.com',    // Safety: in case template uses {{email}}
-            from_name: nameInput.value,
-            name: nameInput.value,
-            phone: phoneInput.value,
-            business: businessInput.value || 'N/A',
-            service: serviceInput.value || 'Not specified',
-            message: messageInput.value || 'N/A',
+            from_name: nameInput ? nameInput.value : 'N/A',
+            from_email: emailInput ? emailInput.value : 'N/A',
+            phone: phoneInput ? phoneInput.value : 'N/A',
+            service: serviceInput ? serviceInput.value : 'Not specified',
+            message: messageInput ? messageInput.value : 'N/A',
         };
 
         console.log('Sending email with params:', templateParams);
